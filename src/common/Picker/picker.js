@@ -1,10 +1,8 @@
 import Taro, { Component, Config } from '@tarojs/taro'
 import { Picker, View, Text } from '@tarojs/components'
 import { observer, inject } from '@tarojs/mobx'
-
-
+import { AtButton } from 'taro-ui'
 import './picker.less'
-import { object } from 'prop-types';
 
 
 @inject('counterStore')
@@ -24,7 +22,7 @@ export default class MyPicker extends Component {
 
   componentDidHide () { }
 
-  onChange = (e:{}) => {
+  onChange = e => {
     console.log('e', e.detail.value)
   }
 
@@ -33,8 +31,7 @@ export default class MyPicker extends Component {
       <View className='container'>
         <Picker mode='selector' range={['美国', '中国', '巴西', '日本']} onChange={this.onChange}>
           <View className='picker'>
-            选择
-            <Text>所有直播间</Text>
+            <AtButton type='primary' size='small'>所有直播间</AtButton>
           </View>
         </Picker>
       </View>
