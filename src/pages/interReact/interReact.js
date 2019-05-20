@@ -44,7 +44,16 @@ export default class InterAction extends Component {
     return (
       <View className='index'>
         <MyPicker />
-        <iframe src='http://datav.aliyuncs.com/share/79702443f27bacaf626d743b0de3638e'></iframe>
+        {
+          process.env.TARO_ENV === 'h5'
+            &&
+          <iframe src='http://datav.aliyuncs.com/share/79702443f27bacaf626d743b0de3638e'></iframe>
+        }
+        {
+          process.env.TARO_ENV === 'weapp'
+            &&
+          <web-view src='http://datav.aliyuncs.com/share/79702443f27bacaf626d743b0de3638e'></web-view>
+        }
         <TabBar />
       </View>
     )

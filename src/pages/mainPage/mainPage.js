@@ -45,7 +45,16 @@ export default class MainPage extends Component {
     return (
       <View className='index'>
         <MyPicker />
-        <iframe src='http://datav.aliyuncs.com/share/d081065571c55c57a5916b1efe181579'></iframe>
+        {
+          process.env.TARO_ENV === 'h5'
+            &&
+          <iframe src='http://datav.aliyuncs.com/share/d081065571c55c57a5916b1efe181579'></iframe>
+        }
+        {
+          process.env.TARO_ENV === 'weapp'
+            &&
+          <web-view src='http://datav.aliyuncs.com/share/d081065571c55c57a5916b1efe181579'></web-view>
+        }
         <TabBar />
       </View>
     )

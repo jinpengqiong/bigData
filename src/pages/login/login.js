@@ -1,41 +1,18 @@
 import Taro, { Component, Config } from '@tarojs/taro'
-import { View, Button, Text, Image } from '@tarojs/components'
+import { View } from '@tarojs/components'
 import { observer, inject } from '@tarojs/mobx'
-import { AtForm, AtInput, AtButton } from 'taro-ui'
-
+import { AtTabs, AtTabsPane } from 'taro-ui'
+import LoginByAccount from './loginByAccount'
+import LoginByCheckCode from './loginByCheckCode'
 import './login.less'
-
-// type PageStateProps = {
-//   counterStore: {
-//     counter: number,
-//     increment: Function,
-//     decrement: Function,
-//     incrementAsync: Function
-//   }
-// }
-
-// interface Index {
-//   props: PageStateProps;
-// }
 
 
 @inject('counterStore')
 @observer
 export default class Login extends Component {
   state = {
-    current: 0,
-    phone : '',
-    password:''
-
+    currentTab: 0
   }
-
-  /**
-   * 指定config的类型声明为: Taro.Config
-   *
-   * 由于 typescript 对于 object 类型推导只能推出 Key 的基本类型
-   * 对于像 navigationBarTextStyle: 'black' 这样的推导出的类型是 string
-   * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
-   */
   config = {
     navigationBarTitleText: '登录'
   }
@@ -61,34 +38,35 @@ export default class Login extends Component {
     })
   }
 
-  handleChange = () => {
+  handleClick = e => {
+    console.log('e',e)
+    this.setState({
+      currentTab:e
+    })
+  }
+
+  handleInputChange = () => {
 
   }
 
   render () {
+    const tabList = [{ title: '帐号登录' }, { title: '验证码登录' }]
     return (
       <View className='index'>
-        <AtForm>
-          <AtInput
-            name='value6'
-            border={false}
-            title='手机号码'
-            type='phone'
-            placeholder='手机号码'
-            value={this.state.phone}
-            onChange={this.handleChange}
-          />
-          <AtInput
-            name='value3'
-            title='密码'
-            type='password'
-            placeholder='密码不能少于10位数'
-            value={this.state.password}
-            onChange={this.handleChange}
-          />
-        </AtForm>
-        <AtButton type='primary' size='normal' onClick={this.redirect}>确定</AtButton>
-      </View>
+        <AtTabs
+        className='tabs'
+        current={this.state.currentTab}
+        tabList={tabList}
+        onClick={this.handleClick}>
+        <AtTabsPane current={this.state.current} index={0} >
+          <LoginByAccount />
+        </AtTabsPane>
+
+        <AtTabsPane current={this.state.currentTab} index={1}>
+          <LoginByCheckCode />
+        </AtTabsPane>
+      </AtTabs>
+    </View>
     )
   }
 }

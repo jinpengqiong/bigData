@@ -37,7 +37,16 @@ export default class FansData extends Component {
     return (
       <View className='index'>
         <MyPicker />
-        <iframe src='http://datav.aliyuncs.com/share/01e1c4f8db2235b28cc378c97557bd3b'></iframe>
+        {
+          process.env.TARO_ENV === 'h5'
+            &&
+          <iframe src='http://datav.aliyuncs.com/share/01e1c4f8db2235b28cc378c97557bd3b'></iframe>
+        }
+        {
+          process.env.TARO_ENV === 'weapp'
+            &&
+          <web-view src='http://datav.aliyuncs.com/share/01e1c4f8db2235b28cc378c97557bd3b'></web-view>
+        }
         <TabBar />
       </View>
     )
