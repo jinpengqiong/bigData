@@ -1,7 +1,8 @@
 import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Button, Text, Image } from '@tarojs/components'
 import { AtForm, AtInput, AtButton } from 'taro-ui'
-
+import fetch from '../../utils/request'
+import { HOST } from '../../constants/constants'
 import './loginByAccount.less'
 
 export default class LoginByAccount extends Component {
@@ -25,11 +26,10 @@ export default class LoginByAccount extends Component {
   componentDidHide () { }
 
   handleSubmit = () => {
-
-    const url = `${HOST}/auth/smsLogin`
+    const url = `${HOST}/auth/loginv2`
     const query = {
-                  phone: this.state.phone,
-                  code: this.state.checkCode,
+                  account: this.state.phone,
+                  password: this.state.password,
                 }
     fetch( {
       url: url,
@@ -45,8 +45,21 @@ export default class LoginByAccount extends Component {
       )
   }
 
-  handleInputChange = () => {
-
+  handleInputChange = (value,type) => {
+    console.log(value)
+    switch(type){
+      case 'phone':
+          this.setState({
+            phone:value
+          })
+          break;
+      case 'password':
+          this.setState({
+            password:value
+          })
+      default:
+        break
+    }
   }
 
   render () {
@@ -59,7 +72,7 @@ export default class LoginByAccount extends Component {
             type='phone'
             placeholder='手机号码'
             value={this.state.phone}
-            onChange={this.handleInputChange}
+            onChange={value => this.handleInputChange(value, 'phone')}
           />
           <AtInput
             name='password'
@@ -67,10 +80,10 @@ export default class LoginByAccount extends Component {
             type='password'
             placeholder='密码不能少于10位数'
             value={this.state.password}
-            onChange={this.handleInputChange}
+            onChange={ value => this.handleInputChange(value, 'password') }
           />
         </AtForm>
-        <AtButton type='primary' size='normal' circle={true} className='confirm' onClick={this.redirect}>确定</AtButton>
+        <AtButton type='primary' size='normal' circle={true} className='confirm' onClick={this.handleSubmit}>确定</AtButton>
       </View>
     )
   }
