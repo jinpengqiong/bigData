@@ -29,8 +29,13 @@ export default class MyPicker extends Component {
   render () {
     return (
       <View className='container'>
-        <Picker mode='selector' range={['美国', '中国', '巴西', '日本']} onChange={this.onChange}>
-          <View className='picker'>
+        <Picker mode='selector' range={['当天', '一周内', '一月内', '自定义']} onChange={this.onChange}>
+          <View className='picker1'>
+            <AtButton type='primary' size='small'>时间范围</AtButton>
+          </View>
+        </Picker>
+        <Picker mode='selector' range={['成都小故事', '中原故事', '东莞电台FM104', '快乐魔方']} onChange={this.onChange}>
+          <View className='picker2'>
             <AtButton type='primary' size='small'>所有直播间</AtButton>
           </View>
         </Picker>

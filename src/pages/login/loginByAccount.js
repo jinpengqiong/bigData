@@ -39,7 +39,7 @@ export default class LoginByAccount extends Component {
       <View>
         <AtForm>
           <AtInput
-            name='phone'
+            name='phone1'
             title='手机号码'
             type='phone'
             placeholder='手机号码'

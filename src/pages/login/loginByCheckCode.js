@@ -1,17 +1,21 @@
 import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Button, Text, Image } from '@tarojs/components'
-import { AtForm, AtInput, AtButton, AtMessage } from 'taro-ui'
-
+import { AtForm, AtInput, AtButton,  } from 'taro-ui'
+import fetch from '../../utils/request'
+import { HOST } from '../../constants/constants'
 import './loginByCheckCode.less'
-import { clearInterval } from 'timers';
 
 export default class LoginByCheckCode extends Component {
-  state = {
-    phone : '',
-    checkCode:'',
-    countDown:59,
-    isDisabled:false
+  constructor(){
+    super(...arguments)
+    this.state = {
+      phone : '',
+      checkCode:'',
+      countDown:59,
+      isDisabled:false
+    }
   }
+
 
   componentWillMount () { }
 
@@ -27,23 +31,44 @@ export default class LoginByCheckCode extends Component {
 
   componentDidHide () { }
 
-  redirect = () => {
-    Taro.navigateTo({
-      url: '/pages/mainPage/mainPage'
-    })
+  handleSubmit = () => {
+    const url = `${HOST}/auth/smsLogin`
+    const query = {
+                  phone: this.state.phone,
+                  code: this.state.checkCode,
+                }
+    fetch( {
+      url: url,
+      payload:query,
+      method:'POST'}
+      ).then(
+        res => {
+          console.log('res',res)
+        }
+      )
   }
 
-  handleInputChange = () => {
-
+  handleInputChange = (value,type) => {
+    console.log(value)
+    switch(type){
+      case 'phone':
+          this.setState({
+            phone:value
+          })
+          break;
+      case 'checkCode':
+          this.setState({
+            checkCode:value
+          })
+      default:
+        break
+    }
   }
 
   sendCheckCode = () => {
     const { countDown, phone } = this.state
-    if(!phone){
-      Taro.atMessage({
-        'message': '请先输入手机号',
-        'type': 'error',
-      })
+    if(phone === ''){
+      this.props.sendMessage('请先输入手机号','error')
       return
     }
     this.setState({
@@ -63,7 +88,27 @@ export default class LoginByCheckCode extends Component {
         })
       }
     }, 1000)
+    const url = `${HOST}/smsCode`
+    const query = {
+                  phone: this.state.phone,
+                }
+    fetch( {
+      url: url,
+      payload:query,
+      method:'POST'}
+      ).then(
+        res => {
+          console.log('code',res)
 
+        }
+      )
+  }
+
+  handleClick (type) {
+    Taro.atMessage({
+      'message': '消息通知',
+      'type': type,
+    })
   }
 
   render () {
@@ -71,21 +116,21 @@ export default class LoginByCheckCode extends Component {
       <View>
         <AtForm>
           <AtInput
-            name='phone1'
+            name='phone2'
             title='手机号码'
-            type='phone1'
+            type='phone'
             placeholder='手机号码'
-            value={this.state.phone1}
-            onChange={this.handleInputChange}
+            value={this.state.phone}
+            onChange={ value => this.handleInputChange(value, 'phone')}
           />
           <AtInput
             clear
             title='验证码'
-            type='text'
+            type='checkCode'
             maxLength='4'
             placeholder='验证码'
             value={this.state.checkCode}
-            onChange={this.handleInputChange}
+            onChange={ value => this.handleInputChange(value, 'checkCode') }
           >
             <AtButton
             type='primary'
@@ -103,7 +148,14 @@ export default class LoginByCheckCode extends Component {
             </AtButton>
           </AtInput>
         </AtForm>
-        <AtButton type='primary' size='normal' circle={true} className='confirm' onClick={this.redirect}>确定</AtButton>
+        <AtButton
+          type='primary'
+          size='normal'
+          circle={true}
+          className='confirm'
+          onClick={this.handleSubmit}>
+          确定
+        </AtButton>
       </View>
     )
   }
