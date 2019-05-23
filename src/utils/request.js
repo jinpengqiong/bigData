@@ -20,9 +20,9 @@ function updateStorage(data = {}) {
  * // NOTE 需要注意 RN 不支持 *StorageSync，此处用 async/await 解决
  * @param {*} options
  */
-export default async function fetch(options) {
+export default function fetch(options) {
   const { url, payload, method = 'GET', showToast = true, autoLogin = true } = options
-  const token = await getStorage('tkn')
+  const token = getStorage('tkn')
   const header = token ? { Authorization: 'Bearer ' + token } : {}
   if (method === 'POST') {
     header['content-type'] = 'application/json'
@@ -33,12 +33,12 @@ export default async function fetch(options) {
     method,
     data: payload,
     header
-  }).then(async (res) => {
+  }).then( (res) => {
     const { code, data } = res.data
     if (code !== CODE_SUCCESS) {
-      if (code === CODE_AUTH_EXPIRED) {
-        await updateStorage({})
-      }
+      // if (code === CODE_AUTH_EXPIRED) {
+      //   await updateStorage({})
+      // }
       return Promise.reject(res.data)
     }
 
@@ -69,7 +69,7 @@ export default async function fetch(options) {
     // }
 
     Taro.navigateTo({
-      url: '/pages/mainPage/mainPage'
+      url: '/pages/login/login'
     })
 
     return Promise.reject({ message: defaultMsg, ...err })

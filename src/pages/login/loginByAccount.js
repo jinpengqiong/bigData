@@ -24,10 +24,25 @@ export default class LoginByAccount extends Component {
 
   componentDidHide () { }
 
-  redirect = () => {
-    Taro.navigateTo({
-      url: '/pages/mainPage/mainPage'
-    })
+  handleSubmit = () => {
+
+    const url = `${HOST}/auth/smsLogin`
+    const query = {
+                  phone: this.state.phone,
+                  code: this.state.checkCode,
+                }
+    fetch( {
+      url: url,
+      payload:query,
+      method:'POST'}
+      ).then(
+        res => {
+          console.log('res',res)
+          Taro.navigateTo({
+            url: '/pages/mainPage/mainPage'
+          })
+        }
+      )
   }
 
   handleInputChange = () => {

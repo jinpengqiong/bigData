@@ -127,7 +127,7 @@ export default class LoginByCheckCode extends Component {
             clear
             title='验证码'
             type='checkCode'
-            maxLength='4'
+            maxLength='6'
             placeholder='验证码'
             value={this.state.checkCode}
             onChange={ value => this.handleInputChange(value, 'checkCode') }
