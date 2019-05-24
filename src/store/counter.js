@@ -6,8 +6,17 @@ const counterStore = observable({
   url1:'',
   url2:'',
   url3:'',
+  chartRoomData:[],
+  timeRange:'',
+  roomRange:[],
   getCurrent(num) {
     this.current = num
-  }
+  },
+  setChartRoom(data){
+    this.chartRoomData = data
+  },
+  setRoomRange(data){
+    this.roomRange = data
+  },
 })
 export default counterStore

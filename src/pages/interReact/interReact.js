@@ -1,10 +1,8 @@
 import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Button, Text } from '@tarojs/components'
 import { observer, inject } from '@tarojs/mobx'
-import { AtTag, AtButton, AtTabBar } from 'taro-ui'
 import TabBar from '../../common/AtTabBar/AtTabBar'
-import MyPicker from '../../common/Picker/picker'
-
+import FabButton from '../../common/FabButton/fabButton'
 import './interReact.less'
 
 @inject('counterStore')
@@ -50,7 +48,6 @@ export default class InterAction extends Component {
   render () {
     return (
       <View className='index'>
-        <MyPicker />
         {
           process.env.TARO_ENV === 'h5'
             &&
@@ -61,6 +58,7 @@ export default class InterAction extends Component {
             &&
           <web-view src='http://datav.aliyuncs.com/share/79702443f27bacaf626d743b0de3638e'></web-view>
         }
+        <FabButton />
         <TabBar />
       </View>
     )

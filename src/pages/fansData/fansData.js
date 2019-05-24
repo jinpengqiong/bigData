@@ -3,8 +3,7 @@ import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Button, Text } from '@tarojs/components'
 import { observer, inject } from '@tarojs/mobx'
 import TabBar from '../../common/AtTabBar/AtTabBar'
-import MyPicker from '../../common/Picker/picker'
-
+import FabButton from '../../common/FabButton/fabButton'
 import './fansData.less'
 
 
@@ -43,7 +42,6 @@ export default class FansData extends Component {
   render () {
     return (
       <View className='index'>
-        <MyPicker />
         {
           process.env.TARO_ENV === 'h5'
             &&
@@ -54,6 +52,7 @@ export default class FansData extends Component {
             &&
           <web-view src='http://datav.aliyuncs.com/share/01e1c4f8db2235b28cc378c97557bd3b'></web-view>
         }
+        <FabButton />
         <TabBar />
       </View>
     )

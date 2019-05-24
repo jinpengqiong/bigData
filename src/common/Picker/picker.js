@@ -1,7 +1,7 @@
 import Taro, { Component, Config } from '@tarojs/taro'
 import { Picker, View, Text } from '@tarojs/components'
 import { observer, inject } from '@tarojs/mobx'
-import { AtButton } from 'taro-ui'
+import { AtButton, AtNavBar } from 'taro-ui'
 import './picker.less'
 import fetch from '../../utils/request'
 import { HOST } from '../../constants/constants'
@@ -12,8 +12,6 @@ export default class MyPicker extends Component {
   constructor(){
     super(...arguments)
     this.state = {
-      chartRooms:[],
-      rangeName:[],
       current:-1
     }
   }
@@ -62,10 +60,8 @@ export default class MyPicker extends Component {
                   return item.name
                 }
               )
-              this.setState({
-                chartRooms: res.data,
-                rangeName:arr
-              })
+              this.props.counterStore.setChartRoom(res.data)
+              this.props.counterStore.setRoomRange(arr)
             }
           )
       }).catch(() => {
@@ -75,24 +71,45 @@ export default class MyPicker extends Component {
       })
   }
 
+  logout = () => {
+    Taro.clearStorage()
+    Taro.navigateTo({
+      url: '/pages/login/login'
+    })
+  }
+
   render () {
     return (
       <View className='container'>
+        <View>
+            <AtNavBar
+              color='#000'
+              leftIconType='chevron-left'
+              title='退出登录'
+              onClickLeftIcon={this.logout}
+            />
+          </View>
         <Picker mode='selector' range={['当天', '一周内', '一月内', '自定义']} onChange={this.onChange}>
-          <View className='picker1'>
-            <AtButton type='primary' size='small'>时间范围</AtButton>
+          <View>
+            <AtNavBar
+              color='#000'
+              title='时间范围'
+              rightSecondIconType='bullet-list'
+            />
           </View>
         </Picker>
-        <Picker mode='selector' range={this.state.rangeName} onChange={this.onChange}>
-          <View className='picker2'>
-            <AtButton type='primary' size='small'>
-            {
-              this.state.current === -1?
-              '所有直播间'
-              :
-              this.state.rangeName[this.state.current]
-            }
-            </AtButton>
+        <Picker mode='selector' range={this.props.counterStore.roomRange} onChange={this.onChange}>
+          <View>
+            <AtNavBar
+              color='#000'
+              title= {
+                this.state.current === -1?
+                '所有直播间'
+                :
+                this.props.counterStore.roomRange[this.state.current]
+              }
+              rightSecondIconType='bullet-list'
+            />
           </View>
         </Picker>
       </View>
