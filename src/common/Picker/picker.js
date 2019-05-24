@@ -3,18 +3,29 @@ import { Picker, View, Text } from '@tarojs/components'
 import { observer, inject } from '@tarojs/mobx'
 import { AtButton } from 'taro-ui'
 import './picker.less'
-
+import fetch from '../../utils/request'
+import { HOST } from '../../constants/constants'
 
 @inject('counterStore')
 @observer
 export default class MyPicker extends Component {
+  constructor(){
+    super(...arguments)
+    this.state = {
+      chartRooms:[],
+      rangeName:[],
+      current:-1
+    }
+  }
   componentWillMount () { }
 
   componentWillReact () {
     console.log('componentWillReact')
   }
 
-  componentDidMount () { }
+  componentDidMount () {
+    this.getChartRooms()
+  }
 
   componentWillUnmount () { }
 
@@ -24,6 +35,44 @@ export default class MyPicker extends Component {
 
   onChange = e => {
     console.log('e', e.detail.value)
+    this.setState({
+      current:e.detail.value
+    })
+  }
+  getChartRooms = () => {
+    let userId
+    Taro.getStorage({ key: 'uid' }).then(
+      res => {
+        console.log('uid', res.data)
+        userId = res.data
+        const url = `${HOST}/users/${userId}/ownedRooms`
+        const query = {
+                      limit: 100,
+                      skip: 0,
+                    }
+        fetch( {
+          url: url,
+          payload:query,
+          method:'GET'}
+          ).then(
+            res => {
+              console.log('res11',res)
+              let arr = res.data.map(
+                item => {
+                  return item.name
+                }
+              )
+              this.setState({
+                chartRooms: res.data,
+                rangeName:arr
+              })
+            }
+          )
+      }).catch(() => {
+        Taro.navigateTo({
+          url: '/pages/login/login'
+        })
+      })
   }
 
   render () {
@@ -34,9 +83,16 @@ export default class MyPicker extends Component {
             <AtButton type='primary' size='small'>时间范围</AtButton>
           </View>
         </Picker>
-        <Picker mode='selector' range={['成都小故事', '中原故事', '东莞电台FM104', '快乐魔方']} onChange={this.onChange}>
+        <Picker mode='selector' range={this.state.rangeName} onChange={this.onChange}>
           <View className='picker2'>
-            <AtButton type='primary' size='small'>所有直播间</AtButton>
+            <AtButton type='primary' size='small'>
+            {
+              this.state.current === -1?
+              '所有直播间'
+              :
+              this.state.rangeName[this.state.current]
+            }
+            </AtButton>
           </View>
         </Picker>
       </View>

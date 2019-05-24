@@ -44,6 +44,9 @@ export default class LoginByCheckCode extends Component {
       ).then(
         res => {
           console.log('res',res)
+          Taro.navigateTo({
+            url: '/pages/mainPage/mainPage'
+          })
         }
       )
   }

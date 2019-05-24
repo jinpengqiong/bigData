@@ -23,7 +23,14 @@ export default class MainPage extends Component {
   }
 
   componentDidMount () {
-    this.props.counterStore.getCurrent(0)
+    Taro.getStorage({ key: 'tkn' }).then(
+      res => {
+        this.props.counterStore.getCurrent(0)
+      }).catch(() => {
+        Taro.navigateTo({
+          url: '/pages/login/login'
+        })
+      })
   }
 
   componentWillUnmount () { }

@@ -31,7 +31,14 @@ export default class InterAction extends Component {
   }
 
   componentDidMount () {
-    this.props.counterStore.getCurrent(1)
+    Taro.getStorage({ key: 'tkn' }).then(
+      res => {
+        this.props.counterStore.getCurrent(1)
+      }).catch(() => {
+        Taro.navigateTo({
+          url: '/pages/login/login'
+        })
+      })
   }
 
   componentWillUnmount () { }

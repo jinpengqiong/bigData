@@ -78,7 +78,7 @@ export default class LoginByAccount extends Component {
             name='password'
             title='密码'
             type='password'
-            placeholder='密码不能少于10位数'
+            placeholder='密码'
             value={this.state.password}
             onChange={ value => this.handleInputChange(value, 'password') }
           />

@@ -1,7 +1,7 @@
 import Taro, { Component } from '@tarojs/taro'
 import { Provider } from '@tarojs/mobx'
 import MainPage from './pages/mainPage/mainPage'
-
+import '@tarojs/async-await'
 import counterStore from './store/counter'
 import 'taro-ui/dist/style/index.scss'
 import './app.less'

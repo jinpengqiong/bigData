@@ -24,7 +24,14 @@ export default class FansData extends Component {
   }
 
   componentDidMount () {
-    this.props.counterStore.getCurrent(2)
+    Taro.getStorage({ key: 'tkn' }).then(
+      res => {
+        this.props.counterStore.getCurrent(2)
+      }).catch(() => {
+        Taro.navigateTo({
+          url: '/pages/login/login'
+        })
+      })
   }
 
   componentWillUnmount () { }
