@@ -5,7 +5,7 @@ import { observer, inject } from '@tarojs/mobx'
 import TabBar from '../../common/AtTabBar/AtTabBar'
 import FabButton from '../../common/FabButton/fabButton'
 import './fansData.less'
-
+import WebViewRN from '../../common/webviewForRn/webviewForRn'
 
 @inject('counterStore')
 @observer
@@ -51,6 +51,11 @@ export default class FansData extends Component {
           process.env.TARO_ENV === 'weapp'
             &&
           <web-view src='http://datav.aliyuncs.com/share/01e1c4f8db2235b28cc378c97557bd3b'></web-view>
+        }
+        {
+          process.env.TARO_ENV === 'rn'
+            &&
+          <WebViewRN src='http://datav.aliyuncs.com/share/01e1c4f8db2235b28cc378c97557bd3b' />
         }
         <FabButton />
         <TabBar />

@@ -89,25 +89,25 @@ export default class MyPicker extends Component {
               onClickLeftIcon={this.logout}
             />
           </View>
-        <Picker mode='selector' range={['当天', '一周内', '一月内', '自定义']} onChange={this.onChange}>
-          <View>
-            <AtNavBar
-              color='#000'
-              title='时间范围'
-              rightSecondIconType='bullet-list'
-            />
-          </View>
-        </Picker>
         <Picker mode='selector' range={this.props.counterStore.roomRange} onChange={this.onChange}>
           <View>
             <AtNavBar
               color='#000'
               title= {
                 this.state.current === -1?
-                '所有直播间'
+                '直播间'
                 :
                 this.props.counterStore.roomRange[this.state.current]
               }
+              rightSecondIconType='bullet-list'
+            />
+          </View>
+        </Picker>
+        <Picker mode='selector' range={['当天', '一周内', '一月内', '自定义']} onChange={this.onChange}>
+          <View>
+            <AtNavBar
+              color='#000'
+              title='时间范围'
               rightSecondIconType='bullet-list'
             />
           </View>

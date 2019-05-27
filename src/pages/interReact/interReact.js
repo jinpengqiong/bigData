@@ -4,6 +4,7 @@ import { observer, inject } from '@tarojs/mobx'
 import TabBar from '../../common/AtTabBar/AtTabBar'
 import FabButton from '../../common/FabButton/fabButton'
 import './interReact.less'
+import WebViewRN from '../../common/webviewForRn/webviewForRn'
 
 @inject('counterStore')
 @observer
@@ -57,6 +58,11 @@ export default class InterAction extends Component {
           process.env.TARO_ENV === 'weapp'
             &&
           <web-view src='http://datav.aliyuncs.com/share/79702443f27bacaf626d743b0de3638e'></web-view>
+        }
+        {
+          process.env.TARO_ENV === 'rn'
+            &&
+          <WebViewRN src='http://datav.aliyuncs.com/share/79702443f27bacaf626d743b0de3638e' />
         }
         <FabButton />
         <TabBar />

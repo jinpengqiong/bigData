@@ -4,6 +4,7 @@ import { observer, inject } from '@tarojs/mobx'
 import { AtFab } from 'taro-ui'
 import TabBar from '../../common/AtTabBar/AtTabBar'
 import FabButton from '../../common/FabButton/fabButton'
+import WebViewRN from '../../common/webviewForRn/webviewForRn'
 import './mainPage.less'
 
 
@@ -50,6 +51,11 @@ export default class MainPage extends Component {
           process.env.TARO_ENV === 'weapp'
             &&
           <web-view src='http://datav.aliyuncs.com/share/d081065571c55c57a5916b1efe181579'></web-view>
+        }
+        {
+          process.env.TARO_ENV === 'rn'
+            &&
+          <WebViewRN src='http://datav.aliyuncs.com/share/d081065571c55c57a5916b1efe181579' />
         }
         <FabButton />
         <TabBar />
