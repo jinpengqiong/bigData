@@ -28,7 +28,7 @@ export default class FabButton extends Component {
 
   render () {
     return (
-      <View className='fab'>
+      <View className='container'>
         <AtFab
         size='small'
         onClick={this.onButtonClick}>

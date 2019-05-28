@@ -62,21 +62,22 @@ export default class Login extends Component {
     return (
       <View className='index'>
         <AtMessage />
-        <AtTabs
-        className='tabs'
-        current={this.state.currentTab}
-        tabList={tabList}
-        onClick={this.handleClick}>
-        <AtTabsPane current={this.state.current} index={0} >
-          <LoginByAccount sendMessage={this.sendMessage}/>
-        </AtTabsPane>
-
-        <AtTabsPane
+        <View className='myTab'>
+          <AtTabs
           current={this.state.currentTab}
-          index={1}>
-          <LoginByCheckCode sendMessage={this.sendMessage}/>
-        </AtTabsPane>
-      </AtTabs>
+          tabList={tabList}
+          onClick={this.handleClick}>
+            <AtTabsPane current={this.state.current} index={0} >
+              <LoginByAccount sendMessage={this.sendMessage}/>
+            </AtTabsPane>
+
+            <AtTabsPane
+              current={this.state.currentTab}
+              index={1}>
+              <LoginByCheckCode sendMessage={this.sendMessage}/>
+            </AtTabsPane>
+          </AtTabs>
+        </View>
     </View>
     )
   }

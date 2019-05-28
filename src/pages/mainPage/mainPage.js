@@ -45,7 +45,7 @@ export default class MainPage extends Component {
         {
           process.env.TARO_ENV === 'h5'
             &&
-          <iframe src='http://datav.aliyuncs.com/share/d081065571c55c57a5916b1efe181579'></iframe>
+          <iframe className='myFrame' src='http://datav.aliyuncs.com/share/d081065571c55c57a5916b1efe181579'></iframe>
         }
         {
           process.env.TARO_ENV === 'weapp'
