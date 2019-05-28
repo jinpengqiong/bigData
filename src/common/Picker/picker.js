@@ -80,7 +80,7 @@ export default class MyPicker extends Component {
 
   render () {
     return (
-      <View className='container'>
+      <View className='index'>
         <View>
             <AtNavBar
               color='#000'
@@ -93,7 +93,7 @@ export default class MyPicker extends Component {
           <View>
             <AtNavBar
               color='#000'
-              title= {
+              title={
                 this.state.current === -1?
                 '直播间'
                 :

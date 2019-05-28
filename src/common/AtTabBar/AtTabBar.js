@@ -57,7 +57,7 @@ export default class TabBar extends Component{
             { title: '粉丝数据', iconType: 'folder' }
           ]}
           onClick={e => this.handleClick(e)}
-          current={this.props.counterStore.current }
+          current={ this.props.counterStore.current }
         />
     )
   }

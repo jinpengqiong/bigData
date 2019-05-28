@@ -2,7 +2,7 @@ import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
 import { observer, inject } from '@tarojs/mobx'
 import { AtFab, AtDrawer } from 'taro-ui'
-import Picker from '../Picker/picker'
+import MyPicker from '../Picker/picker'
 import './fabButton.less'
 
 
@@ -38,7 +38,7 @@ export default class FabButton extends Component {
           show={this.state.isDisplay}
           onClose={this.onClose}
         >
-          <Picker />
+          <MyPicker />
         </AtDrawer>
       </View>
     )
